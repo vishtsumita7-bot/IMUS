@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#090707">
+<meta name="description" content="IMUS — Play. Chat. Connect.">
+<link rel="manifest" href="manifest.json">
+<title>IMUS</title>
+<style>
+:root{--bg:#070606;--panel:#100b0b;--panel2:#171010;--red:#9b1717;--red2:#d32222;--line:#321717;--text:#f5eeee;--muted:#968b8b}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,Arial,sans-serif}
+button,input{font:inherit}.app{min-height:100vh;display:grid;grid-template-columns:72px 235px 1fr 220px}
+.rail{background:#0a0808;border-right:1px solid var(--line);padding:12px 10px;display:flex;flex-direction:column;gap:12px}
+.logo{height:52px;width:52px;border-radius:16px;background:linear-gradient(145deg,#c51c1c,#4d0909);display:grid;place-items:center;font-size:25px;font-weight:950;box-shadow:0 0 26px #a7191930}
+.rbtn,.server{border:1px solid #291414;background:#110e0e;color:#aaa;cursor:pointer}.rbtn{width:52px;height:52px;border-radius:16px;font-size:20px}.rbtn:hover,.server:hover{border-color:var(--red);color:white}
+.sidebar{background:#0d0909;border-right:1px solid var(--line);padding:18px 14px}.brand{font-size:25px;font-weight:950;letter-spacing:3px}.tag{font-size:10px;color:#706565;letter-spacing:1px}.section{font-size:10px;color:#685d5d;text-transform:uppercase;letter-spacing:1.5px;margin:25px 7px 8px}
+.server{display:block;width:100%;padding:11px 12px;border-radius:10px;text-align:left;margin:4px 0}.server.active{background:#3a1010;color:#fff;border-color:#671515}
+.main{min-width:0;display:flex;flex-direction:column}.top{height:68px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 20px}.online{font-size:12px;color:#62d58b}
+.content{padding:22px;overflow:auto;flex:1}.hero{border:1px solid #4b1717;border-radius:18px;padding:25px;background:radial-gradient(circle at 85% 10%,#4b101020,transparent 35%),linear-gradient(135deg,#1b0b0b,#0d0b0b)}h1{font-size:34px;margin:0 0 7px}.hero p{color:var(--muted);margin:0 0 18px}.btn{border:0;background:var(--red);color:#fff;padding:11px 16px;border-radius:10px;font-weight:800;cursor:pointer}.btn:hover{background:var(--red2)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}.card{background:var(--panel);border:1px solid #2c1515;border-radius:14px;padding:16px;cursor:pointer}.card:hover{border-color:#7c1717}.emoji{font-size:25px}.card b{display:block;margin-top:7px}.card small{color:#756b6b}
+.chat{margin-top:20px}.msg{display:flex;gap:10px;padding:9px 0}.avatar{width:36px;height:36px;border-radius:11px;background:#4a1111;display:grid;place-items:center;font-size:12px;font-weight:900;flex:none}.msg small{color:#706666}.msg p{margin:4px 0;color:#cfc6c6}.input{display:flex;gap:8px;border-top:1px solid var(--line);padding-top:14px}.input input{flex:1;min-width:0;background:#110e0e;border:1px solid #302020;border-radius:10px;padding:12px;color:white;outline:0}.input input:focus{border-color:var(--red)}
+.right{background:#0d0909;border-left:1px solid var(--line);padding:18px}.profile{background:#130e0e;border:1px solid #2d1515;border-radius:14px;padding:14px}.big{width:56px;height:56px;border-radius:17px;background:#671111;display:grid;place-items:center;font-size:22px;font-weight:900}.member{display:flex;align-items:center;gap:8px;padding:8px 0;color:#aaa}.dot{height:8px;width:8px;border-radius:50%;background:#59cf7e}
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:#241010;border:1px solid #6c1818;padding:12px 16px;border-radius:12px;display:none}
+@media(max-width:850px){.app{grid-template-columns:62px 1fr}.sidebar,.right{display:none}.rail{padding:10px 5px}.rbtn,.logo{width:48px;height:48px}.content{padding:15px}.grid{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.grid{grid-template-columns:1fr}h1{font-size:27px}.top{padding:0 14px}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="rail">
+<div class="logo">I</div>
+<button class="rbtn" onclick="community('Home')">⌂</button>
+<button class="rbtn" onclick="community('Valorant')">V</button>
+<button class="rbtn" onclick="community('BGMI')">B</button>
+<button class="rbtn" onclick="community('Minecraft')">M</button>
+</aside>
+<aside class="sidebar">
+<div class="brand">IMUS</div><div class="tag">PLAY. CHAT. CONNECT.</div>
+<div class="section">Communities</div>
+<button class="server active" onclick="community('Home')">🏠 Home</button>
+<button class="server" onclick="community('Valorant')">🔻 Valorant</button>
+<button class="server" onclick="community('BGMI')">🎯 BGMI</button>
+<button class="server" onclick="community('Minecraft')">⛏️ Minecraft</button>
+<div class="section">Channels</div>
+<button class="server" onclick="channel('general')"># general</button>
+<button class="server" onclick="channel('squad-finder')"># squad-finder</button>
+<button class="server" onclick="channel('clips')"># clips</button>
+<button class="server" onclick="toast('🎙️ Voice rooms will be enabled in the next build.')">🔊 Gaming Lounge</button>
+</aside>
+<main class="main">
+<header class="top"><b># <span id="channel">general</span></b><span class="online">● 128 online</span></header>
+<section class="content">
+<div class="hero"><h1>Welcome to IMUS 🔥</h1><p>Find your squad, chat, share clips and level up.</p><button class="btn" onclick="toast('🔥 You joined the IMUS squad!')">Join the squad</button></div>
+<div class="grid">
+<div class="card" onclick="community('Valorant')"><div class="emoji">🔻</div><b>Valorant</b><small>1.2K members</small></div>
+<div class="card" onclick="community('BGMI')"><div class="emoji">🎯</div><b>BGMI</b><small>890 members</small></div>
+<div class="card" onclick="community('Minecraft')"><div class="emoji">⛏️</div><b>Minecraft</b><small>640 members</small></div>
+</div>
+<div class="chat" id="chat">
+<div class="msg"><div class="avatar">NX</div><div><b>NightX</b> <small>2m</small><p>Anyone up for a ranked match?</p></div></div>
+<div class="msg"><div class="avatar">K</div><div><b>Kira</b> <small>1m</small><p>I'm in 🔥</p></div></div>
+</div>
+<div class="input"><input id="msg" placeholder="Message #general" onkeydown="if(event.key==='Enter')send()"><button class="btn" onclick="send()">Send</button></div>
+</section></main>
+<aside class="right">
+<div class="profile"><div class="big">S</div><b style="display:block;margin-top:9px">Sumi</b><small style="color:#59cf7e">● Online</small><br><small style="color:#777">Level 7 • Gamer</small></div>
+<div class="section">Online — 5</div>
+<div class="member"><span class="dot"></span> NightX</div><div class="member"><span class="dot"></span> Kira</div><div class="member"><span class="dot"></span> Shadow</div><div class="member"><span class="dot"></span> Ace</div><div class="member"><span class="dot"></span> Nova</div>
+</aside>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+function toast(t){let e=document.getElementById('toast');e.textContent=t;e.style.display='block';clearTimeout(window.tt);window.tt=setTimeout(()=>e.style.display='none',2200)}
+function community(n){document.getElementById('channel').textContent=n.toLowerCase();toast('🎮 '+n+' community selected')}
+function channel(n){document.getElementById('channel').textContent=n}
+function send(){let i=document.getElementById('msg'),v=i.value.trim();if(!v)return;let r=document.createElement('div');r.className='msg';r.innerHTML='<div class="avatar">S</div><div><b>Sumi</b> <small>now</small><p></p></div>';r.querySelector('p').textContent=v;document.getElementById('chat').appendChild(r);i.value='';document.getElementById('chat').scrollIntoView({behavior:'smooth',block:'end'})}
+if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(()=>{});
+</script>
+</body></html>

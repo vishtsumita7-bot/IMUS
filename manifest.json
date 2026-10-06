@@ -1,0 +1,9 @@
+{
+  "name": "IMUS",
+  "short_name": "IMUS",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#070606",
+  "theme_color": "#090707",
+  "icons": []
+}
